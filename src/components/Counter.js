@@ -1,30 +1,34 @@
 import { Component } from "react";
 import classes from "./Counter.module.css";
+import { counterAction } from "../store/index";
 import { useSelector, useDispatch, connect } from "react-redux";
 
 // FUNCTIONAL BASED
 const Counter = () => {
-  const counter = useSelector((state) => state.counter);
+  const counter = useSelector((state) => state.counter.counter);
   const dispatch = useDispatch();
+  const show = useSelector((state) => state.counter.showCounter);
 
   const incrementHandler = () => {
-    dispatch({ type: "increment" });
+    dispatch(counterAction.increment());
   };
 
   const decrementHandler = () => {
-    dispatch({ type: "decrement" });
+    dispatch(counterAction.decrement());
   };
 
   const increaseHandler = () => {
-    dispatch({type: 'increase', amount: 5})
-  }
+    dispatch(counterAction.increase(10)); //{type: SOME_UNIQUE_IDENTIFIER, payload: 10}
+  };
 
-  const toggleCounterHandler = () => {};
+  const toggleCounterHandler = () => {
+    dispatch(counterAction.toggleCounter());
+  };
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>{counter}</div>
+      {show && <div className={classes.value}>{counter}</div>}
       <div>
         <button onClick={incrementHandler}>Increment</button>
         <button onClick={increaseHandler}>Increase by 5</button>
