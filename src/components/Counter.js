@@ -1,28 +1,27 @@
-import { Component } from "react";
-import classes from "./Counter.module.css";
-import { counterAction } from "../store/index";
-import { useSelector, useDispatch, connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-// FUNCTIONAL BASED
+import { counterActions } from "../store/counter";
+import classes from "./Counter.module.css";
+
 const Counter = () => {
-  const counter = useSelector((state) => state.counter.counter);
   const dispatch = useDispatch();
+  const counter = useSelector((state) => state.counter.counter);
   const show = useSelector((state) => state.counter.showCounter);
 
   const incrementHandler = () => {
-    dispatch(counterAction.increment());
-  };
-
-  const decrementHandler = () => {
-    dispatch(counterAction.decrement());
+    dispatch(counterActions.increment());
   };
 
   const increaseHandler = () => {
-    dispatch(counterAction.increase(10)); //{type: SOME_UNIQUE_IDENTIFIER, payload: 10}
+    dispatch(counterActions.increase(10)); // { type: SOME_UNIQUE_IDENTIFIER, payload: 10 }
+  };
+
+  const decrementHandler = () => {
+    dispatch(counterActions.decrement());
   };
 
   const toggleCounterHandler = () => {
-    dispatch(counterAction.toggleCounter());
+    dispatch(counterActions.toggleCounter());
   };
 
   return (
@@ -31,7 +30,7 @@ const Counter = () => {
       {show && <div className={classes.value}>{counter}</div>}
       <div>
         <button onClick={incrementHandler}>Increment</button>
-        <button onClick={increaseHandler}>Increase by 5</button>
+        <button onClick={increaseHandler}>Increase by 10</button>
         <button onClick={decrementHandler}>Decrement</button>
       </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>
@@ -40,8 +39,6 @@ const Counter = () => {
 };
 
 export default Counter;
-
-//CLASS BASED
 
 // class Counter extends Component {
 //   incrementHandler() {
@@ -52,9 +49,7 @@ export default Counter;
 //     this.props.decrement();
 //   }
 
-//   toggleCounterHandler() {
-
-//   }
+//   toggleCounterHandler() {}
 
 //   render() {
 //     return (
@@ -71,17 +66,17 @@ export default Counter;
 //   }
 // }
 
-// const mapStateToProps = (state) => {
-//   return{
+// const mapStateToProps = state => {
+//   return {
 //     counter: state.counter
-//   }
+//   };
 // }
 
-// const mapDispatchToProps = (dispatch) => {
+// const mapDispatchToProps = dispatch => {
 //   return {
-//     increment: () => dispatch({type: 'increment'}),
-//     decrement: () => dispatch({type: 'decrement'})
+//     increment: () => dispatch({ type: 'increment' }),
+//     decrement: () => dispatch({ type: 'decrement' }),
 //   }
-// }
+// };
 
 // export default connect(mapStateToProps, mapDispatchToProps)(Counter);
